@@ -2,6 +2,7 @@
 #include <ws2tcpip.h>
 #include <mstcpip.h>
 #include <iostream>
+#include <conio.h>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -67,6 +68,10 @@ int main() {
 	std::cout << "Listening for packets..." << std::endl;
 	char buffer[65536];
 	while (true) {
+		if (_kbhit() && _getch() == 'q') {
+			std::cout << "\nExiting..." << std::endl;
+			break;
+		}
 		int packet_size = recv(raw_socket, buffer, sizeof(buffer), 0);
 		if (packet_size > 0) {
 			print_packet(buffer, packet_size);
